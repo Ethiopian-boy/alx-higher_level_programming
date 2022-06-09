@@ -1,27 +1,59 @@
-#include "Python.h"
-/**
-  * print_python_list_info - Prints information about python objects
-  * @p: PyObject pointer to print info about
-  * Compile with:
-  * gcc -Wall -Werror -Wextra -pedantic -std=c99 -shared -Wl,-soname,libPython.so -o libPython.so -fPIC -I/usr/include/python3.4 103-python.c
-  */
-void print_python_list_info(PyObject *p)
+#include "/usr/include/python3.4/Python.h"
+#include <stdio.h>
+
+void print_hexn(const char *str, int n)
 {
-	Py_ssize_t i, py_list_size;
-	PyObject *item;
-	const char *item_type;
-	PyListObject *list_object_cast;
+	int i = 0;
 
-	list_object_cast = (PyListObject *)p;
-	py_list_size = PyList_Size(p);
+	for (; i < n - 1; ++i)
+		printf("%02x ", (unsigned char) str[i]);
 
-	printf("[*] Size of the Python List = %d\n", (int) py_list_size);
-	printf("[*] Allocated = %d\n", (int)list_object_cast->allocated);
-	for (i = 0; i < py_list_size; i++)
+	printf("%02x", str[i]);
+}
+
+void print_python_bytes(PyObject *p)
+{
+	PyBytesObject *clone = (PyBytesObject *) p;
+	int calc_bytes, clone_size = 0;
+
+	printf("[.] bytes object info\n");
+	if (PyBytes_Check(clone))
 	{
-		item = PyList_GetItem(p, i);
-		item_type = (PyObject*(item))->ob_size->tp_name;
-		printf("Element %d: %s\n", (int) i, item_type);
+		clone_size = PyBytes_Size(p);
+		calc_bytes = clone_size + 1;
+
+		if (calc_bytes >= 10)
+			calc_bytes = 10;
+
+		printf("  size: %d\n", clone_size);
+		printf("  trying string: %s\n", clone->ob_sval);
+		printf("  first %d bytes: ", calc_bytes);
+		print_hexn(clone->ob_sval, calc_bytes);
+		printf("\n");
+	}
+	else
+	{
+		printf("  [ERROR] Invalid Bytes Object\n");
 	}
 }
 
+void print_python_list(PyObject *p)
+{
+	int i = 0, list_len = 0;
+	PyObject *item;
+	PyListObject *clone = (PyListObject *) p;
+
+	printf("[*] Python list info\n");
+	list_len = PyList_GET_SIZE(p);
+	printf("[*] Size of the Python List = %d\n", list_len);
+	printf("[*] Allocated = %d\n", (int) clone->allocated);
+
+	for (; i < list_len; ++i)
+	{
+		item = PyList_GET_ITEM(p, i);
+		printf("Element %d: %s\n", i, item->ob_type->tp_name);
+
+		if (PyBytes_Check(item))
+			print_python_bytes(item);
+	}
+}
