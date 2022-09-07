@@ -1,9 +1,8 @@
 #!/usr/bin/node
 
-const args = process.argv.slice(2);
-const argInt = args.map(s => parseInt(s));
-if (args.length === 0 || args.length === 1) {
+const array = process.argv.slice(2);
+if (array.length < 2) {
   console.log('0');
 } else {
-  console.log(argInt.sort().reverse()[1]);
+  console.log(array.sort().reverse()[1]);
 }
