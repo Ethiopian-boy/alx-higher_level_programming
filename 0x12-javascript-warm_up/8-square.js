@@ -5,6 +5,6 @@ if (isNaN(argInt)) {
   console.log('Missing size');
 } else {
   for (let i = 0; i < argInt; i++) {
-    console.log('x'.repeat(argInt));
+    console.log('X'.repeat(argInt));
   }
 }
