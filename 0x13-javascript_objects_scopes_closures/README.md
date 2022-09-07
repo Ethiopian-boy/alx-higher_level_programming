@@ -1,4 +1,4 @@
-# avaScript - Objects, Scopes and Closures
+# JavaScript - Objects, Scopes and Closures
 * Why JavaScript programming is amazing
 * How to create an object in JavaScript
 * What this means
