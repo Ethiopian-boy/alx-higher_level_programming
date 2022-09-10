@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-return all table values of table States where name matches the argument.
-parameters give to script: username password, database, name
+return all table value of cities by states
+parameters give to script: username, password, database
 """
 
 import MySQLdb
@@ -18,8 +18,12 @@ if __name__ == "__main__":
 
     # create cursor to execute queries using SQl
     cur = db.cursor()
-    cur.execute("SELECT * FROM states WHERE name = %s ORDER BY id ASC",
-                (argv[4],))
+    sql_exc = """SELECT cities.id, cities.name, states.name
+                FROM states
+                INNER JOIN cities ON states.id = cities.state_id
+                ORDER BY cities.id"""
+    cur.execute(sql_exc)
+
     for rows in cur.fetchall():
         print(rows)
     cur.close()
