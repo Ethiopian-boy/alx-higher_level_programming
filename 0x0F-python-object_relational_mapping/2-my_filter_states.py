@@ -18,8 +18,8 @@ if __name__ == "__main__":
 
     # create cursor to execute queries using SQl
     cur = db.cursor()
-    cur.execute("SELECT * FROM states WHERE name = %s ORDER BY id ASC",
-                (argv[4],))
+    cur.execute("SELECT * FROM states WHERE name LIKE '{:s}' ORDER BY id ASC".
+                format(argv[4]))
     for rows in cur.fetchall():
         if rows[1] == argv[4]:
             print(rows)
