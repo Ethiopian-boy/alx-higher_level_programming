@@ -21,7 +21,7 @@ if __name__ == "__main__":
     session = Session()
 
     # Query instances in database
-    obj = session.query(State).filter(name=argv[4]).first()
+    obj = session.query(State).filter_by(name=argv[4]).first()
     if obj:
         print("{:d}".format(obj.id))
     else:
