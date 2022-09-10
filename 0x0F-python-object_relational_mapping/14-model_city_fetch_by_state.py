@@ -22,8 +22,8 @@ if __name__ == "__main__":
     session = Session()
 
     # Query multiple table
-    for ele in session.query(State.name, City.id, City.nmae).filter(
-              State.id == City.state.id).order_by(City.id):
+    for ele in session.query(State.name, City.id, City.name).filter(
+              State.id == City.state_id).order_by(City.id):
         print("{:s}: ({:d}) {:s}".format(ele[0], ele[1], ele[2]))
 
     session.close()
