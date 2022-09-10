@@ -22,7 +22,7 @@ if __name__ == "__main__":
     # Query instances in database
     obj = session.query(State).filter(name=argv[4]).first()
     if obj:
-        print("{:d}".format(state.id))
+        print("{:d}".format(State.id))
     else:
         print("Not found")
 
