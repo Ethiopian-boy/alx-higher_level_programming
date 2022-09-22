@@ -13,13 +13,21 @@ def find_peak(list_of_integers):
 
     L = list_of_integers
     beg = 0
-    end = len(L)-1
-    mid = (beg+end)//2
+    end = len(L) - 1
+
+    if L[beg] > L[beg + 1]:
+        return L[beg]
+    if L[end] > L[end - 1]:
+        return L[end]
+
+    mid = (beg + end) // 2
     if L[mid-1] < L[mid] and L[mid+1] < L[mid]:
         return L[mid]
-    elif L[mid] < L[mid-1]:
-        return find_peak(L[beg:mid+1])
-    elif L[mid] < L[mid+1]:
+    if L[mid] < L[mid + 1]:
         return find_peak(L[mid:end+1])
+    elif L[mid] < L[mid - 1]:
+        return find_peak(L[beg:mid+1])
     else:
+        if beg == end:
+            return L[end]
         return L[beg]
