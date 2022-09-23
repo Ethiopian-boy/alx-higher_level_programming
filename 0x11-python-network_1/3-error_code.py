@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """
+given URL & email as params, display response body utf-8, print error codes
 Error code
 """
 from urllib.request import Request, urlopen
